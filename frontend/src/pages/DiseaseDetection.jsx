@@ -43,6 +43,7 @@ const DiseaseDetection = () => {
   const [result, setResult] = useState(null);
   const [error, setError] = useState(null);
   const [showCropHints, setShowCropHints] = useState(false);
+  const [showRecommendations, setShowRecommendations] = useState(false);
 
   const handleImageChange = (e) => {
     if (e.target.files && e.target.files[0]) {
@@ -51,6 +52,7 @@ const DiseaseDetection = () => {
       setSelectedImage(URL.createObjectURL(file));
       setResult(null);
       setError(null);
+      setShowRecommendations(false);
     }
   };
 
@@ -59,6 +61,7 @@ const DiseaseDetection = () => {
     setIsAnalyzing(true);
     setResult(null);
     setError(null);
+    setShowRecommendations(false);
     try {
       // Pass the current selected language to the backend
       const res = await predictCropDisease(imageFile, i18n.language);
@@ -88,6 +91,7 @@ const DiseaseDetection = () => {
     setImageFile(null);
     setResult(null);
     setError(null);
+    setShowRecommendations(false);
   };
 
   return (
@@ -271,17 +275,42 @@ const DiseaseDetection = () => {
               </div>
             </div>
           ) : result ? (
-            <div className="animate-in slide-in-from-right-10 duration-700 space-y-8">
-              <AIResultCard result={result} />
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <DiseaseInformationPanel result={result} />
-                <RecommendationPanel recommendations={result.recommendations} />
-              </div>
-              <NearbyShops cropName={result.cropName} />
+            <div className="relative">
+              {/* ── Results View State 1: Analysis Report ─────────────────── */}
+              {!showRecommendations ? (
+                <div className="space-y-8 animate-in slide-in-from-right-10 duration-500">
+                  <AIResultCard result={result} />
+                  <DiseaseInformationPanel result={result} />
+                  
+                  <div className="flex justify-center mt-8 pt-4">
+                    <button 
+                      onClick={() => setShowRecommendations(true)}
+                      className="bg-emerald-600 hover:bg-emerald-700 text-white font-black px-8 py-4 rounded-2xl transition-all shadow-xl shadow-emerald-200 hover:-translate-y-1 flex items-center gap-3 text-lg w-full md:w-auto"
+                    >
+                      <ShieldCheck className="w-6 h-6" />
+                      View Recommendations & Local Shops
+                    </button>
+                  </div>
+                </div>
+              ) : (
+              {/* ── Results View State 2: Recommendations ───────────────── */}
+                <div className="space-y-8 animate-in slide-in-from-bottom-5 duration-500">
+                  <div className="flex items-center justify-between bg-emerald-50 p-4 rounded-2xl border border-emerald-100">
+                    <h3 className="font-bold text-emerald-900">Treatment Plan for {result.diseaseName}</h3>
+                    <button 
+                      onClick={() => setShowRecommendations(false)}
+                      className="text-emerald-700 bg-emerald-100/50 hover:bg-emerald-200 px-4 py-2 rounded-xl text-sm font-bold transition-all"
+                    >
+                      ← Back to Analysis
+                    </button>
+                  </div>
+                  
+                  <RecommendationPanel recommendations={result.recommendations} />
+                  <NearbyShops cropName={result.cropName} />
+                </div>
+              )}
             </div>
           ) : (
-            /* ── Idle / Waiting ──────────────────────────────────────────── */
-            <div className="glass-card p-12 flex flex-col items-center justify-center min-h-[500px] text-center border-2 border-dashed border-emerald-100 bg-white/40">
               <div className="bg-emerald-50 p-6 rounded-full mb-6">
                 <ShieldCheck className="w-16 h-16 text-emerald-200" />
               </div>
