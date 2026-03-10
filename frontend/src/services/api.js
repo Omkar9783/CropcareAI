@@ -8,6 +8,13 @@ let mockHistory = [
     status: "Moderate",
     confidence: "88%",
     date: "2023-10-14T10:30:00Z",
+    description: "AI analysis detected 'Early Blight' on Tomato with 88% confidence.",
+    recommendations: {
+      immediate: ["Remove visibly infected leaves/fruit immediately.", "Improve air circulation by pruning dense foliage."],
+      organic: ["Apply Sulfur-based fungicides (UPL Sulflox) or Potassium Bicarbonate sprays.", "Use compost tea to boost plant immunity."],
+      chemical: ["Apply broad-spectrum fungicides like Syngenta Amistar (Azoxystrobin) or Bayer Luna Sensation.", "Use systemic fungicides like Ridomil Gold for deep-seated infections."],
+      preventive: ["Avoid watering foliage; use drip irrigation.", "Rotate crops to non-host plants for 3 years.", "Contact your nearby fertilizer retailer to purchase high-quality drip irrigation supplies."]
+    }
   },
   {
     _id: "report2",
@@ -16,6 +23,13 @@ let mockHistory = [
     status: "Severe",
     confidence: "92%",
     date: "2023-09-21T14:15:00Z",
+    description: "AI analysis detected 'Brown Spot' on Rice with 92% confidence.",
+    recommendations: {
+      immediate: ["Remove visibly infected leaves/fruit immediately."],
+      organic: ["Apply Potassium Bicarbonate sprays."],
+      chemical: ["Apply appropriate fungicides every 7-14 days.", "Use systemic fungicides for deep-seated infections."],
+      preventive: ["Avoid watering foliage; use drip irrigation.", "Rotate crops to non-host plants for 3 years."]
+    }
   },
 ];
 
