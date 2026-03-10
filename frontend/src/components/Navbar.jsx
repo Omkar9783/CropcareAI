@@ -54,6 +54,11 @@ const Navbar = () => {
             className="nav-link text-gray-700 hover:text-emerald-700">
             {t("nav.history")}
           </Link>
+          <Link
+            to="/community"
+            className="nav-link text-gray-700 hover:text-emerald-700">
+            Community
+          </Link>
         </div>
 
         <div className="flex items-center gap-4">
@@ -119,6 +124,11 @@ const Navbar = () => {
           to="/history"
           className="whitespace-nowrap bg-emerald-700 px-4 py-2 rounded-full text-sm font-medium">
           {t("nav.history")}
+        </Link>
+        <Link
+          to="/community"
+          className="whitespace-nowrap bg-emerald-700 px-4 py-2 rounded-full text-sm font-medium">
+          Community
         </Link>
       </div>
     </nav>
