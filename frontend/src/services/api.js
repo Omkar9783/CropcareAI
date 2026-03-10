@@ -52,33 +52,71 @@ export const saveToHistory = async (report) => {
 };
 
 const mockLibrary = [
-  {
-    id: 1,
-    crop: "Tomato",
-    name: "Late Blight",
-    symptoms:
-      "Dark lesions on leaves, white fungal growth on undersides in humid weather.",
-    causes: "Phytophthora infestans (fungus-like organism)",
-    prevention: "Apply copper-based fungicides, avoid overhead watering.",
-  },
-  {
-    id: 2,
-    crop: "Potato",
-    name: "Early Blight",
-    symptoms:
-      "Brown spots with concentric rings (target spots) on older leaves.",
-    causes: "Alternaria solani (fungus)",
-    prevention:
-      "Crop rotation, ensure adequate nitrogen, apply fungicides early.",
-  },
-  {
-    id: 3,
-    crop: "Wheat",
-    name: "Rust",
-    symptoms: "Yellow, orange, or reddish-brown powdery pustules on leaves.",
-    causes: "Puccinia spp. (fungus)",
-    prevention: "Plant resistant varieties, apply foliar fungicides timely.",
-  },
+  // Apple
+  { id: 1, crop: "Apple", name: "Apple Scab", symptoms: "Dull black or olive-green spots on leaves and fruit.", causes: "Venturia inaequalis (fungus)", prevention: "Apply fungicides like Myclobutanil; prune for better airflow." },
+  { id: 2, crop: "Apple", name: "Black Rot", symptoms: "Purple spots on leaves; brown rotting on fruit; cankers on branches.", causes: "Botryosphaeria obtusa (fungus)", prevention: "Remove dead wood and mummified fruit; apply Captan fungicide." },
+  { id: 3, crop: "Apple", name: "Cedar Apple Rust", symptoms: "Bright orange-yellow rust spots on leaves.", causes: "Gymnosporangium spp. (fungus)", prevention: "Remove nearby cedar hosts; apply protectant fungicides early." },
+  { id: 4, crop: "Apple", name: "Healthy", symptoms: "No visible signs of disease.", causes: "N/A", prevention: "Maintain regular pruning and fertilization." },
+
+  // Blueberry
+  { id: 5, crop: "Blueberry", name: "Healthy", symptoms: "No visible signs of disease.", causes: "N/A", prevention: "Maintain acidic soil pH and water regularly." },
+
+  // Cherry
+  { id: 6, crop: "Cherry", name: "Powdery Mildew", symptoms: "White powdery patches on leaves; distorted new growth.", causes: "Podosphaera clandestina (fungus)", prevention: "Improve air circulation; apply sulfur or potassium bicarbonate sprays." },
+  { id: 7, crop: "Cherry", name: "Healthy", symptoms: "Rich green leaves indicating good health.", causes: "N/A", prevention: "Water at the base and schedule winter pruning." },
+
+  // Corn
+  { id: 8, crop: "Corn", name: "Cercospora Leaf Spot (Gray Leaf Spot)", symptoms: "Rectangular, pale brown or gray lesions on lower leaves.", causes: "Cercospora zeae-maydis (fungus)", prevention: "Use resistant hybrids; practice crop rotation and tillage." },
+  { id: 9, crop: "Corn", name: "Common Rust", symptoms: "Small, circular brown or rust-colored pustules on leaves.", causes: "Puccinia sorghi (fungus)", prevention: "Plant rust-resistant hybrids; apply foliar fungicide if severe." },
+  { id: 10, crop: "Corn", name: "Northern Leaf Blight", symptoms: "Long, elliptical, grayish-green or tan lesions.", causes: "Exserohilum turcicum (fungus)", prevention: "Use resistant varieties; practice crop rotation to break the cycle." },
+  { id: 11, crop: "Corn", name: "Healthy", symptoms: "Sturdy green stalks and wide leaves.", causes: "N/A", prevention: "Ensure adequate nitrogen supply." },
+
+  // Grape
+  { id: 12, crop: "Grape", name: "Black Rot", symptoms: "Reddish-brown leaf spots; shriveled, mummified black grapes.", causes: "Guignardia bidwellii (fungus)", prevention: "Prune heavily to increase airflow; use Mancozeb fungicides." },
+  { id: 13, crop: "Grape", name: "Esca (Black Measles)", symptoms: "Tiger-stripe patterns on leaves; spotting on berries.", causes: "Various fungi (Phaeomoniella, Phaeoacremonium)", prevention: "Remove and burn infected vines; apply wound paste after pruning." },
+  { id: 14, crop: "Grape", name: "Leaf Blight", symptoms: "Large necrotic patches on leaves.", causes: "Pseudocercospora vitis (fungus)", prevention: "Apply copper-based fungicides; clean up vineyard debris." },
+  { id: 15, crop: "Grape", name: "Healthy", symptoms: "Vibrant leaves and robust clusters.", causes: "N/A", prevention: "Use drip irrigation to keep foliage dry." },
+
+  // Orange
+  { id: 16, crop: "Orange", name: "Haunglongbing (Citrus Greening)", symptoms: "Asymmetrical yellow mottling on leaves; bitter, green fruit.", causes: "Candidatus Liberibacter (bacteria transmitted by psyllids)", prevention: "Control Asian citrus psyllid populations; use certified clean trees." },
+
+  // Peach
+  { id: 17, crop: "Peach", name: "Bacterial Spot", symptoms: "Small, water-soaked spots that turn purple-black; fruit pitting.", causes: "Xanthomonas campestris (bacteria)", prevention: "Plant resistant varieties; apply fixed copper early in the season." },
+  { id: 18, crop: "Peach", name: "Healthy", symptoms: "Lush, unblemished leaves.", causes: "N/A", prevention: "Apply dormant oil sprays in winter." },
+
+  // Bell Pepper
+  { id: 19, crop: "Bell Pepper", name: "Bacterial Spot", symptoms: "Small brown spots surrounded by yellow halos; leaves drop early.", causes: "Xanthomonas campestris (bacteria)", prevention: "Use certified seeds; avoid overhead irrigation; apply copper sprays." },
+  { id: 20, crop: "Bell Pepper", name: "Healthy", symptoms: "Dark green, firm leaves.", causes: "N/A", prevention: "Rotate crops away from other nightshades." },
+
+  // Potato
+  { id: 21, crop: "Potato", name: "Early Blight", symptoms: "Brown target-like concentric rings on older leaves.", causes: "Alternaria solani (fungus)", prevention: "Ensure adequate nitrogen; apply Chlorothalonil early." },
+  { id: 22, crop: "Potato", name: "Late Blight", symptoms: "Dark, water-soaked lesions; white fungal growth on undersides.", causes: "Phytophthora infestans (fungus-like organism)", prevention: "Plant certified potato seeds; apply preventative copper fungicides." },
+  { id: 23, crop: "Potato", name: "Healthy", symptoms: "Vigorous green foliage.", causes: "N/A", prevention: "Huddle soil around the base to protect tubers." },
+
+  // Raspberry
+  { id: 24, crop: "Raspberry", name: "Healthy", symptoms: "Strong canes and healthy leaves.", causes: "N/A", prevention: "Prune old floricanes immediately after fruiting." },
+
+  // Soybean
+  { id: 25, crop: "Soybean", name: "Healthy", symptoms: "Unblemished green leaves.", causes: "N/A", prevention: "Maintain good drainage to prevent root rot." },
+
+  // Squash
+  { id: 26, crop: "Squash", name: "Powdery Mildew", symptoms: "White, powdery fungal spots on upper leaf surfaces.", causes: "Podosphaera xanthii (fungus)", prevention: "Use resistant seeds; apply Neem oil or sulfur dust." },
+
+  // Strawberry
+  { id: 27, crop: "Strawberry", name: "Leaf Scorch", symptoms: "Irregular purple to solid brown blotches on leaves.", causes: "Diplocarpon earlianum (fungus)", prevention: "Remove dead leaves in winter; thin plants for better airflow." },
+  { id: 28, crop: "Strawberry", name: "Healthy", symptoms: "Bright green leaves; zero fungal spots.", causes: "N/A", prevention: "Use straw mulch to keep berries off the damp soil." },
+
+  // Tomato
+  { id: 29, crop: "Tomato", name: "Bacterial Spot", symptoms: "Small water-soaked spots on leaves that turn brown with yellow halos.", causes: "Xanthomonas vesicatoria (bacteria)", prevention: "Use pathogen-free seed; avoid overhead watering; copper sprays." },
+  { id: 30, crop: "Tomato", name: "Early Blight", symptoms: "Brown spots with concentric rings on lower leaves first.", causes: "Alternaria solani (fungus)", prevention: "Stake or cage plants; maintain a regular fungicide regimen." },
+  { id: 31, crop: "Tomato", name: "Late Blight", symptoms: "Large dark patches; rapid wilting and white mold in humidity.", causes: "Phytophthora infestans (fungus-like)", prevention: "Preventative copper fungicide; pull and bag infected plants." },
+  { id: 32, crop: "Tomato", name: "Leaf Mold", symptoms: "Pale green to yellow spots on top; olive-green mold on the bottom of leaves.", causes: "Passalora fulva (fungus)", prevention: "Improve greenhouse ventilation; space plants widely." },
+  { id: 33, crop: "Tomato", name: "Septoria Leaf Spot", symptoms: "Numerous small circular spots with dark borders and tan centers.", causes: "Septoria lycopersici (fungus)", prevention: "Mulch soil surface; prune lower leaves; apply Chlorothalonil." },
+  { id: 34, crop: "Tomato", name: "Spider Mites", symptoms: "Stippled, yellowing leaves; very fine webbing visible under leaves.", causes: "Tetranychus urticae (pest/arachnid)", prevention: "Spray leaves with water forcefully; apply horticultural oils or miticides." },
+  { id: 35, crop: "Tomato", name: "Target Spot", symptoms: "Dark brown spots with lighter centers; fruits have sunken lesions.", causes: "Corynespora cassiicola (fungus)", prevention: "Increase airflow; apply targeted fungicides." },
+  { id: 36, crop: "Tomato", name: "Yellow Leaf Curl Virus", symptoms: "Upward curling leaves, yellowing margins, stunted growth.", causes: "Begomovirus (transmitted by Whiteflies)", prevention: "Control whiteflies with Imidacloprid; use reflective mulch." },
+  { id: 37, crop: "Tomato", name: "Mosaic Virus", symptoms: "Mottled light and dark green areas on leaves; fern-like appearance.", causes: "Tomato Mosaic Virus (ToMV)", prevention: "Disinfect tools; wash hands after handling tobacco; remove infected plants." },
+  { id: 38, crop: "Tomato", name: "Healthy", symptoms: "Rich green, unblemished foliage with no wilting.", causes: "N/A", prevention: "Consistent watering to avoid blossom end rot; fertilize deeply." },
 ];
 
 // Mock Auth
