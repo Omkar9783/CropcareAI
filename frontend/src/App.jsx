@@ -8,6 +8,7 @@ import DiseaseLibrary from "./pages/DiseaseLibrary";
 import FarmerHistory from "./pages/FarmerHistory";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import Community from "./pages/Community";
 import { AuthProvider, AuthContext } from "./context/AuthContext";
 import { Navigate } from "react-router-dom";
 import { useContext } from "react";
