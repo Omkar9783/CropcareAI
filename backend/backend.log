@@ -1,0 +1,17 @@
+/Users/omkarpanchal/Downloads/CHK-1772702884642-6141-main/CHK-1772702884642-6141-main/backend/main.py:58: DeprecationWarning: 
+        on_event is deprecated, use lifespan event handlers instead.
+
+        Read more about it in the
+        [FastAPI docs for Lifespan Events](https://fastapi.tiangolo.com/advanced/events/).
+        
+  @app.on_event("startup")
+INFO:     Started server process [67367]
+INFO:     Waiting for application startup.
+WARNING:absl:Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+✅ TensorFlow loaded successfully
+✅ Labels loaded: 39 classes
+✅ Model loaded from crop_disease_model.h5
+INFO:     127.0.0.1:62990 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63025 - "POST /predict HTTP/1.1" 200 OK

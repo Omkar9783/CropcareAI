@@ -4,17 +4,98 @@
     "home": "Dashboard",
     "detect": "Disease Detection",
     "library": "Crop Library",
-    "history": "History"
+    "history": "History",
+    "login": "Login",
+    "register": "Register",
+    "logout": "Logout"
+  },
+  "hero": {
+    "title": "Protect Your Crops with",
+    "titleAccent": "AI Precision.",
+    "subtitle": "Empowering farmers with state-of-the-art CNN technology for instant disease detection and smart treatment recommendations.",
+    "startBtn": "Start Detection",
+    "browseBtn": "Browse Library"
   },
   "dashboard": {
     "welcome": "Welcome, Farmer!",
     "weather": "Weather Overview",
+    "humidity": "Humidity",
+    "rainRisk": "Rain risk",
     "quickActions": "Quick Actions",
+    "scanTitle": "Scan Your Crop",
+    "scanDesc": "Get instant AI results and expert treatment advice in seconds.",
+    "libraryTitle": "Knowledge Base",
+    "libraryDesc": "Master crop health with our expansive disease identification library.",
+    "historyTitle": "Analysis Archive",
+    "historyDesc": "Track and monitor your farm's health history over time.",
     "actionUpload": "Upload Crop Image",
     "actionLibrary": "Browse Diseases",
     "actionHelp": "Help Center"
   },
+  "experts": {
+    "title": "Community & Expert Advice",
+    "subtitle": "Connect with leading agricultural scientists and fellow farmers.",
+    "viewAll": "View All Experts",
+    "online": "Online",
+    "forumTitle": "Join the Farmer's Forum",
+    "forumDesc": "Discuss disease prevention and share your success stories with 10k+ farmers.",
+    "forumBtn": "Access Forum"
+  },
+  "detection": {
+    "title": "Disease Detection",
+    "subtitle": "Upload a photo of your crop leaf to get an instant diagnosis.",
+    "infoTitle": "How to get best results:",
+    "tip1": "Upload a clear, close-up photo of a single leaf.",
+    "tip2": "Ensure good lighting and avoid blurry images.",
+    "tip3": "Only plant/crop leaves are supported. Other images will be rejected.",
+    "supportedCrops": "Supported Crops",
+    "uploadLabel": "Upload Crop Leaf Photo",
+    "uploadHint": "PNG, JPG up to 10MB",
+    "analyzing": "Analyzing Image...",
+    "errorTitle": "Detection Failed",
+    "tryAnother": "Try Another Photo",
+    "resultReport": "Analysis Report",
+    "cropTarget": "Crop Target",
+    "priority": "Priority",
+    "identifiedIssue": "Identified Issue",
+    "confidence": "Confidence",
+    "scanningMap": "Scanning Thermal Map",
+    "aiReference": "Our AI has cross-referenced your sample with over 50,000 agricultural data points.",
+    "explanation": "Disease Explanation",
+    "description": "Description",
+    "causes": "Possible Causes",
+    "recommendations": "Preventive Recommendations",
+    "recImmediate": "Immediate Actions",
+    "recOrganic": "Organic Solutions",
+    "recChemical": "Chemical Treatment",
+    "recPreventive": "Preventive Practices"
+  },
+  "library": {
+    "title": "Crop Disease Library",
+    "subtitle": "Browse our comprehensive database of plant diseases.",
+    "searchPlaceholder": "Search crop or disease...",
+    "affects": "Affects",
+    "symptoms": "Symptoms",
+    "prevention": "Prevention",
+    "readMore": "Read Full Guide",
+    "noResults": "No diseases found matching"
+  },
+  "history": {
+    "title": "Analysis History",
+    "subtitle": "Review your past crop scans and AI recommendations.",
+    "id": "ID",
+    "viewDetails": "View Details"
+  },
+  "chatbot": {
+    "title": "AI Assistant",
+    "online": "Online",
+    "welcome": "Namaste! I am your AI Crop Assistant. Ask me anything about crop diseases and treatments.",
+    "placeholder": "Type your question...",
+    "error": "Sorry, I am having trouble connecting to the server. Please try again."
+  },
   "footer": {
-    "text": "Empowering Farmers with AI"
+    "text": "Empowering Farmers with AI",
+    "follow": "Follow us",
+    "copyright": "© 2026 CropCare AI • Sustainable Farming for the Future"
   }
 }

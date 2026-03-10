@@ -101,61 +101,89 @@ export const predictCropDisease = async (imageFile) => {
       body: formData,
     });
 
+    // 422 = crop validation rejected (not a leaf image)
+    if (response.status === 422) {
+      const errorData = await response.json();
+      return {
+        validationError: true,
+        detail:
+          errorData.detail ||
+          "Image does not appear to be a crop leaf. Please upload a clear plant leaf photo.",
+      };
+    }
+
     if (!response.ok) {
-      throw new Error("Failed to get prediction from server");
+      throw new Error(`Server error (${response.status}). Please try again.`);
     }
 
     const data = await response.json();
+    // Recommendations are now returned by the backend itself;
+    // fall back to generics only if absent.
     return {
       ...data,
-      description: "AI-powered analysis from the CNN model.",
-      recommendations: {
-        immediate: [
-          "Consult with a local expert for specific treatment advice.",
-        ],
+      description:
+        data.description || "AI-powered analysis from the CNN model.",
+      recommendations: data.recommendations || {
+        immediate: ["Consult with a local agricultural expert."],
         organic: ["Apply neem oil or other organic fungicides."],
-        chemical: [
-          "Use appropriate fungicides as per local agricultural guidelines.",
-        ],
+        chemical: ["Use fungicides as per local agricultural guidelines."],
         preventive: ["Ensure proper crop rotation and soil health management."],
       },
     };
   } catch (error) {
     console.error("Prediction error:", error);
-    // Fallback to mock for development if server is down
-    return {
-      cropName: "Error",
-      diseaseName: "Server Unreachable",
-      severity: "N/A",
-      confidence: "0%",
-      description:
-        "Could not connect to the backend server. Please ensure the FastAPI server is running.",
-      recommendations: { immediate: ["Check backend status"] },
-    };
+    throw new Error(
+      error.message ||
+        "Could not connect to the backend server. Please ensure the FastAPI server is running on port 8000."
+    );
   }
 };
 
+const OPENAI_API_KEY =
+  "PULL_FROM_ENV_OR_REPLACE_WITH_YOUR_KEY";
+
+const SYSTEM_PROMPT = `You are CropCare AI, an expert agricultural assistant specializing in crop diseases, plant health, and farming best practices. You help farmers identify diseases, understand symptoms, and get actionable advice on:
+- Crop disease diagnosis and treatment
+- Organic and chemical remedies
+- Fertilizer and soil health recommendations
+- Preventive farming practices
+- Weather impact on crops
+Keep your answers concise, practical, and farmer-friendly. If a question is unrelated to agriculture, politely redirect the conversation back to farming topics.`;
+
 export const chatWithBot = async (message) => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      let reply =
-        "I am a simple mock AI. Please try asking about tomatoes, fungus, or fertilizer.";
-      const lower = message.toLowerCase();
+  try {
+    const response = await fetch("https://api.openai.com/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${OPENAI_API_KEY}`,
+      },
+      body: JSON.stringify({
+        model: "gpt-4o-mini",
+        messages: [
+          { role: "system", content: SYSTEM_PROMPT },
+          { role: "user", content: message },
+        ],
+        max_tokens: 300,
+        temperature: 0.7,
+      }),
+    });
 
-      if (lower.includes("yellow") && lower.includes("tomato")) {
-        reply =
-          "Yellowing tomato leaves often indicate a nutrient deficiency (like nitrogen) or early blight. Ensure your plants receive adequate water without waterlogging, and consider a balanced fertilizer.";
-      } else if (lower.includes("fungal")) {
-        reply =
-          "For fungal infections, immediate removal of infected leaves is crucial. Improve air circulation and consider copper-based organic fungicides.";
-      } else if (lower.includes("fertilizer")) {
-        reply =
-          "A balanced NPK fertilizer (like 10-10-10) is a good start. However, if your soil lacks specific nutrients, organic compost or targeted fertilizers are better.";
-      }
+    if (!response.ok) {
+      const err = await response.json();
+      throw new Error(err.error?.message || "OpenAI API error");
+    }
 
-      resolve({ reply });
-    }, 1000);
-  });
+    const data = await response.json();
+    const reply = data.choices?.[0]?.message?.content?.trim();
+    return { reply: reply || "Sorry, I couldn't generate a response. Please try again." };
+  } catch (error) {
+    console.error("Chatbot error:", error);
+    return {
+      reply:
+        "Sorry, I'm having trouble connecting right now. Please check your internet connection and try again.",
+    };
+  }
 };
 
 export const getHistory = async () => {

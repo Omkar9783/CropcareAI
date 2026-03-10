@@ -9,7 +9,7 @@ import {
   Droplets,
   CloudRain,
   AlertTriangle,
-  Leaf
+  Leaf,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 
@@ -28,21 +28,20 @@ const Home = () => {
         <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-emerald-500/20 to-transparent pointer-events-none"></div>
         <div className="relative z-10 max-w-2xl">
           <h1 className="text-4xl md:text-6xl font-black mb-6 leading-tight">
-            Protect Your Crops with{" "}
-            <span className="text-yellow-400">AI Precision.</span>
+            {t("hero.title")}{" "}
+            <span className="text-yellow-400">{t("hero.titleAccent")}</span>
           </h1>
           <p className="text-lg md:text-xl text-emerald-100 mb-8 font-medium">
-            Empowering farmers with state-of-the-art CNN technology for instant
-            disease detection and smart treatment recommendations.
+            {t("hero.subtitle")}
           </p>
           <div className="flex flex-wrap gap-4">
             <Link to="/detect" className="btn-primary px-8 py-4 text-lg">
-              <Camera className="w-6 h-6" /> Start Detection
+              <Camera className="w-6 h-6" /> {t("hero.startBtn")}
             </Link>
             <Link
               to="/library"
               className="bg-white/10 hover:bg-white/20 backdrop-blur-md text-white px-8 py-4 rounded-2xl font-bold transition-all border border-white/20">
-              Browse Library
+              {t("hero.browseBtn")}
             </Link>
           </div>
         </div>
@@ -66,7 +65,9 @@ const Home = () => {
               <div className="flex items-center justify-between bg-white/40 p-5 rounded-2xl border border-white/20 backdrop-blur-sm">
                 <div className="flex items-center gap-4">
                   <Droplets className="text-blue-500 w-5 h-5" />
-                  <span className="font-bold text-gray-600">Humidity</span>
+                  <span className="font-bold text-gray-600">
+                    {t("dashboard.humidity")}
+                  </span>
                 </div>
                 <span className="text-2xl font-black text-gray-900">
                   {weather.humidity}
@@ -76,7 +77,9 @@ const Home = () => {
               <div className="flex items-center justify-between bg-white/40 p-5 rounded-2xl border border-white/20 backdrop-blur-sm">
                 <div className="flex items-center gap-4">
                   <CloudRain className="text-slate-500 w-5 h-5" />
-                  <span className="font-bold text-gray-600">Rain risk</span>
+                  <span className="font-bold text-gray-600">
+                    {t("dashboard.rainRisk")}
+                  </span>
                 </div>
                 <span className="text-2xl font-black text-gray-900">
                   {weather.rain}
@@ -111,10 +114,10 @@ const Home = () => {
                 <Camera className="w-7 h-7 text-white" />
               </div>
               <h3 className="text-2xl font-black text-gray-900 mb-2">
-                Scan Your Crop
+                {t("dashboard.scanTitle")}
               </h3>
               <p className="text-gray-500 font-medium italic">
-                Get instant AI results and expert treatment advice in seconds.
+                {t("dashboard.scanDesc")}
               </p>
             </div>
             <div className="absolute -bottom-6 -right-6 opacity-5">
@@ -130,11 +133,10 @@ const Home = () => {
                 <BookOpen className="w-7 h-7 text-white" />
               </div>
               <h3 className="text-2xl font-black text-gray-900 mb-2">
-                Knowledge Base
+                {t("dashboard.libraryTitle")}
               </h3>
               <p className="text-gray-500 font-medium italic">
-                Master crop health with our expansive disease identification
-                library.
+                {t("dashboard.libraryDesc")}
               </p>
             </div>
             <div className="absolute -bottom-6 -right-6 opacity-5">
@@ -151,10 +153,10 @@ const Home = () => {
               </div>
               <div>
                 <h3 className="text-2xl font-black text-gray-900">
-                  Analysis Archive
+                  {t("dashboard.historyTitle")}
                 </h3>
                 <p className="text-gray-500 font-medium">
-                  Track and monitor your farm's health history over time.
+                  {t("dashboard.historyDesc")}
                 </p>
               </div>
             </div>
@@ -170,14 +172,14 @@ const Home = () => {
         <div className="flex flex-col md:flex-row justify-between items-end gap-4">
           <div>
             <h2 className="text-3xl font-black text-emerald-900 tracking-tight">
-              Community & Expert Advice
+              {t("experts.title")}
             </h2>
             <p className="text-emerald-800/60 font-bold mt-2">
-              Connect with leading agricultural scientists and fellow farmers.
+              {t("experts.subtitle")}
             </p>
           </div>
           <button className="text-emerald-600 font-extrabold hover:underline flex items-center gap-2">
-            View All Experts <span className="text-xl">→</span>
+            {t("experts.viewAll")} <span className="text-xl">→</span>
           </button>
         </div>
 
@@ -199,9 +201,7 @@ const Home = () => {
               img: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d",
             },
           ].map((expert, i) => (
-            <div
-              key={i}
-              className="glass-card p-6 flex items-center gap-6">
+            <div key={i} className="glass-card p-6 flex items-center gap-6">
               <div className="w-20 h-20 rounded-2xl overflow-hidden shadow-lg border-2 border-white flex-shrink-0">
                 <img
                   src={expert.img}
@@ -219,7 +219,7 @@ const Home = () => {
                 <div className="mt-2 flex gap-1">
                   <div className="w-2 h-2 bg-emerald-400 rounded-full"></div>
                   <span className="text-[10px] font-black text-gray-400 uppercase">
-                    Online
+                    {t("experts.online")}
                   </span>
                 </div>
               </div>
@@ -230,14 +230,13 @@ const Home = () => {
         <div className="glass-card p-1 bg-gradient-to-r from-emerald-600 to-emerald-800">
           <div className="bg-white/10 backdrop-blur-md rounded-[22px] p-8 flex flex-col md:flex-row items-center justify-between gap-8 text-white">
             <div className="space-y-2 text-center md:text-left">
-              <h3 className="text-2xl font-black">Join the Farmer's Forum</h3>
+              <h3 className="text-2xl font-black">{t("experts.forumTitle")}</h3>
               <p className="text-emerald-100 font-medium">
-                Discuss disease prevention and share your success stories with
-                10k+ farmers.
+                {t("experts.forumDesc")}
               </p>
             </div>
             <button className="bg-white text-emerald-900 px-10 py-4 rounded-2xl font-black shadow-2xl whitespace-nowrap">
-              Access Forum
+              {t("experts.forumBtn")}
             </button>
           </div>
         </div>

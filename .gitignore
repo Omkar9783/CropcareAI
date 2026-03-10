@@ -1,0 +1,24 @@
+# Node modules
+node_modules/
+dist/
+dist-ssr/
+*.local
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv*/
+env/
+.env
+
+# Large files / datasets
+backend/dataset/
+*.h5
+*.hdf5
+*.pt
+*.pth
+
+# IDEs
+.idea/
+.vscode/

@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { Search, Loader2, BookOpen, ChevronRight } from "lucide-react";
 import { getDiseaseLibrary } from "../services/api";
 
 const DiseaseLibrary = () => {
+  const { t } = useTranslation();
   const [diseases, setDiseases] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
@@ -25,17 +27,15 @@ const DiseaseLibrary = () => {
       <div className="flex flex-col md:flex-row gap-6 justify-between items-start md:items-end mb-8">
         <div>
           <h1 className="text-3xl font-extrabold text-gray-900 border-b-4 border-amber-500 inline-block pb-1">
-            Crop Disease Library
+            {t("library.title")}
           </h1>
-          <p className="text-gray-500 mt-2 text-lg">
-            Browse our comprehensive database of plant diseases.
-          </p>
+          <p className="text-gray-500 mt-2 text-lg">{t("library.subtitle")}</p>
         </div>
 
         <div className="relative w-full md:w-96">
           <input
             type="text"
-            placeholder="Search crop or disease..."
+            placeholder={t("library.searchPlaceholder")}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="w-full pl-12 pr-4 py-4 rounded-2xl border-2 border-gray-200 focus:border-amber-500 outline-none transition-colors text-lg"
@@ -62,13 +62,13 @@ const DiseaseLibrary = () => {
                   {item.name}
                 </h3>
                 <p className="text-emerald-700 font-medium text-sm mb-4">
-                  Affects: {item.crop}
+                  {t("library.affects")}: {item.crop}
                 </p>
 
                 <div className="space-y-3 mb-6">
                   <div>
                     <h4 className="text-xs font-bold text-gray-400 uppercase tracking-wider">
-                      Symptoms
+                      {t("library.symptoms")}
                     </h4>
                     <p className="text-gray-700 text-sm line-clamp-2">
                       {item.symptoms}
@@ -76,7 +76,7 @@ const DiseaseLibrary = () => {
                   </div>
                   <div>
                     <h4 className="text-xs font-bold text-gray-400 uppercase tracking-wider">
-                      Prevention
+                      {t("library.prevention")}
                     </h4>
                     <p className="text-gray-700 text-sm line-clamp-2">
                       {item.prevention}
@@ -85,14 +85,15 @@ const DiseaseLibrary = () => {
                 </div>
 
                 <div className="flex items-center text-amber-600 font-bold text-sm opacity-0 group-hover:opacity-100 transition-opacity">
-                  Read Full Guide <ChevronRight className="w-4 h-4 ml-1" />
+                  {t("library.readMore")}{" "}
+                  <ChevronRight className="w-4 h-4 ml-1" />
                 </div>
               </div>
             ))
           ) : (
             <div className="col-span-full py-16 text-center text-gray-500">
               <p className="text-xl font-medium">
-                No diseases found matching "{searchTerm}"
+                {t("library.noResults")} "{searchTerm}"
               </p>
             </div>
           )}

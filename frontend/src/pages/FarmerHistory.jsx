@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { getHistory } from "../services/api";
 import {
   Clock,
@@ -9,6 +10,7 @@ import {
 } from "lucide-react";
 
 const FarmerHistory = () => {
+  const { t } = useTranslation();
   const [history, setHistory] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -23,10 +25,10 @@ const FarmerHistory = () => {
     <div className="space-y-8 animate-in fade-in duration-500 max-w-5xl mx-auto">
       <div className="mb-8 border-l-4 border-l-blue-500 pl-4">
         <h1 className="text-3xl font-extrabold text-gray-900 border-b-2 border-transparent pb-1 inline-block">
-          Analysis History
+          {t("history.title")}
         </h1>
         <p className="text-gray-500 mt-2 text-lg">
-          Review your past crop scans and AI recommendations.
+          {t("history.subtitle")}
         </p>
       </div>
 
@@ -54,7 +56,7 @@ const FarmerHistory = () => {
                       {record.crop} - {record.disease}
                     </h3>
                     <p className="text-gray-500 text-sm flex items-center gap-1 mt-1">
-                      <Clock className="w-4 h-4" /> {new Date(record.date).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })} • ID: {record._id}
+                      <Clock className="w-4 h-4" /> {new Date(record.date).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })} • {t("history.id")}: {record._id}
                     </p>
                   </div>
                 </div>
@@ -78,7 +80,7 @@ const FarmerHistory = () => {
 
                   <button className="bg-white border-2 border-gray-200 hover:border-gray-300 text-gray-700 px-4 py-1.5 rounded-full text-sm font-medium transition-colors ml-auto md:ml-0 flex items-center gap-2">
                     <CheckCircle2 className="w-4 h-4" />
-                    View Details
+                    {t("history.viewDetails")}
                   </button>
                 </div>
               </div>

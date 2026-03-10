@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { ShieldAlert, Leaf, TestTube, Recycle } from "lucide-react";
 
 // eslint-disable-next-line no-unused-vars
@@ -21,38 +22,39 @@ const OptionCard = ({ title, items, icon: Icon, colorClass, bgClass }) => (
 );
 
 const RecommendationPanel = ({ recommendations }) => {
+  const { t } = useTranslation();
   if (!recommendations) return null;
 
   return (
     <div className="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm mt-6">
       <h3 className="text-2xl font-bold text-gray-900 mb-6 border-b pb-4">
-        Preventive Recommendations
+        {t("detection.recommendations")}
       </h3>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <OptionCard
-          title="Immediate Actions"
+          title={t("detection.recImmediate")}
           items={recommendations.immediate}
           icon={ShieldAlert}
           colorClass="border-red-500"
           bgClass="bg-red-50/50"
         />
         <OptionCard
-          title="Organic Solutions"
+          title={t("detection.recOrganic")}
           items={recommendations.organic}
           icon={Leaf}
           colorClass="border-emerald-500"
           bgClass="bg-emerald-50/50"
         />
         <OptionCard
-          title="Chemical Treatment"
+          title={t("detection.recChemical")}
           items={recommendations.chemical}
           icon={TestTube}
           colorClass="border-blue-500"
           bgClass="bg-blue-50/50"
         />
         <OptionCard
-          title="Preventive Practices"
+          title={t("detection.recPreventive")}
           items={recommendations.preventive}
           icon={Recycle}
           colorClass="border-purple-500"

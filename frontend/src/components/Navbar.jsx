@@ -26,13 +26,17 @@ const Navbar = () => {
           <div className="bg-emerald-600 p-2 rounded-xl animate-float">
             <Leaf className="w-6 h-6 text-yellow-300" />
           </div>
-          <Link to="/" className="text-2xl font-black tracking-tight text-emerald-900">
+          <Link
+            to="/"
+            className="text-2xl font-black tracking-tight text-emerald-900">
             {t("appTitle")}
           </Link>
         </div>
 
         <div className="hidden md:flex space-x-2 items-center">
-          <Link to="/" className="nav-link text-gray-700 hover:text-emerald-700">
+          <Link
+            to="/"
+            className="nav-link text-gray-700 hover:text-emerald-700">
             {t("nav.home")}
           </Link>
           <Link
@@ -67,23 +71,27 @@ const Navbar = () => {
 
           {user ? (
             <div className="flex items-center gap-3">
-              <span className="hidden sm:block font-bold text-emerald-900">{user.name}</span>
+              <span className="hidden sm:block font-bold text-emerald-900">
+                {user.name}
+              </span>
               <button
                 onClick={handleLogout}
                 className="bg-rose-500 hover:bg-rose-600 text-white p-2.5 rounded-xl transition-all shadow-md shadow-rose-100"
-                title="Logout">
+                title={t("nav.logout")}>
                 <LogOut className="w-4 h-4" />
               </button>
             </div>
           ) : (
             <div className="flex items-center gap-4">
-              <Link to="/login" className="font-bold text-gray-600 hover:text-emerald-700">
-                Login
+              <Link
+                to="/login"
+                className="font-bold text-gray-600 hover:text-emerald-700">
+                {t("nav.login")}
               </Link>
               <Link
                 to="/register"
                 className="bg-emerald-600 text-white px-5 py-2 rounded-xl font-bold hover:bg-emerald-700 transition-all shadow-lg shadow-emerald-100">
-                Register
+                {t("nav.register")}
               </Link>
             </div>
           )}

@@ -21,7 +21,7 @@ const Footer = () => {
           </button>
           <div className="flex items-center gap-4 px-6 py-4 bg-white/40 rounded-2xl border border-white/20 backdrop-blur-sm">
             <span className="text-emerald-900 font-black text-sm">
-              Follow us
+              {t("footer.follow")}
             </span>
             <div className="w-8 h-8 bg-emerald-100 rounded-full"></div>
             <div className="w-8 h-8 bg-emerald-100 rounded-full"></div>
@@ -29,7 +29,7 @@ const Footer = () => {
         </div>
       </div>
       <p className="text-center mt-8 text-emerald-800/40 font-black text-xs uppercase tracking-[0.3em]">
-        © 2026 CropCare AI • Sustainable Farming for the Future
+        {t("footer.copyright")}
       </p>
     </footer>
   );

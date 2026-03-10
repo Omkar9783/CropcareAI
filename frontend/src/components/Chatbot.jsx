@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
+import { useTranslation } from "react-i18next";
 import {
   MessageSquare,
   X,
@@ -13,12 +14,13 @@ import { chatWithBot } from "../services/api";
 import { AuthContext } from "../context/AuthContext";
 
 const Chatbot = () => {
+  const { t } = useTranslation();
   const { user } = useContext(AuthContext);
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([
     {
       sender: "ai",
-      text: "Namaste! I am your AI Crop Assistant. Ask me anything about crop diseases and treatments.",
+      text: t("chatbot.welcome"),
     },
   ]);
   const [input, setInput] = useState("");
@@ -103,7 +105,7 @@ const Chatbot = () => {
         ...prev,
         {
           sender: "ai",
-          text: "Sorry, I am having trouble connecting to the server. Please try again.",
+          text: t("chatbot.error"),
         },
       ]);
     } finally {
@@ -124,8 +126,8 @@ const Chatbot = () => {
                 <MessageSquare className="w-5 h-5" />
               </div>
               <div>
-                <h3 className="font-bold">AI Assistant</h3>
-                <p className="text-xs text-emerald-100">Online</p>
+                <h3 className="font-bold">{t("chatbot.title")}</h3>
+                <p className="text-xs text-emerald-100">{t("chatbot.online")}</p>
               </div>
             </div>
             <div className="flex items-center gap-2">
@@ -197,7 +199,7 @@ const Chatbot = () => {
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              placeholder="Type your question..."
+              placeholder={t("chatbot.placeholder")}
               className="flex-1 bg-gray-100 px-4 py-2 rounded-full outline-none focus:ring-2 focus:ring-emerald-500"
             />
 

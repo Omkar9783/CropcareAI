@@ -1,7 +1,9 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { ShieldCheck, AlertOctagon, Activity } from "lucide-react";
 
 const AIResultCard = ({ result }) => {
+  const { t } = useTranslation();
   if (!result) return null;
 
   const isSevere = result.severity.toLowerCase() === "severe";
@@ -11,11 +13,11 @@ const AIResultCard = ({ result }) => {
       <div className="flex justify-between items-start mb-8">
         <div>
           <h2 className="text-3xl font-black text-emerald-900 leading-tight">
-            Analysis Report
+            {t("detection.resultReport")}
           </h2>
           <div className="flex items-center gap-2 mt-2">
             <span className="text-emerald-600 font-bold uppercase tracking-wider text-xs bg-emerald-50 px-3 py-1 rounded-full border border-emerald-100">
-              Crop Target
+              {t("detection.cropTarget")}
             </span>
             <span className="font-black text-gray-700">{result.cropName}</span>
           </div>
@@ -27,7 +29,7 @@ const AIResultCard = ({ result }) => {
               : "bg-amber-500 text-white shadow-amber-200"
           }`}>
           {isSevere ? <AlertOctagon size={20} /> : <Activity size={20} />}
-          {result.severity} Priority
+          {result.severity} {t("detection.priority")}
         </div>
       </div>
 
@@ -36,7 +38,7 @@ const AIResultCard = ({ result }) => {
           <div className="space-y-6">
             <div>
               <p className="text-xs font-black text-emerald-600 uppercase tracking-[0.2em] mb-2">
-                Identified Issue
+                {t("detection.identifiedIssue")}
               </p>
               <p className="text-2xl font-black text-gray-900 leading-tight">
                 {result.diseaseName}
@@ -45,7 +47,7 @@ const AIResultCard = ({ result }) => {
             <div>
               <div className="flex justify-between items-end mb-3">
                 <p className="text-xs font-black text-emerald-600 uppercase tracking-[0.2em]">
-                  Confidence
+                  {t("detection.confidence")}
                 </p>
                 <span className="font-black text-emerald-700 text-xl">
                   {result.confidence}
@@ -66,7 +68,7 @@ const AIResultCard = ({ result }) => {
             <div className="absolute inset-0 bg-rose-500/30 mix-blend-multiply opacity-0 group-hover:opacity-100 transition-opacity"></div>
             <div className="absolute inset-x-0 bottom-0 bg-black/60 backdrop-blur-md p-4 flex items-center justify-between">
               <p className="text-white text-[10px] font-black uppercase tracking-wider italic">
-                Scanning Thermal Map
+                {t("detection.scanningMap")}
               </p>
               <ShieldCheck className="w-4 h-4 text-emerald-400" />
             </div>
@@ -75,8 +77,7 @@ const AIResultCard = ({ result }) => {
       </div>
 
       <p className="mt-8 text-gray-500 font-medium text-sm leading-relaxed border-l-4 border-emerald-200 pl-4 italic">
-        "Our AI has cross-referenced your sample with over 50,000 agricultural
-        data points."
+        "{t("detection.aiReference")}"
       </p>
     </div>
   );
