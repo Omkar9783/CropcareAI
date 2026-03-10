@@ -68,8 +68,13 @@ def preprocess_image(image_bytes: bytes) -> np.ndarray:
     return img_array
 
 
+from fastapi import FastAPI, UploadFile, File, HTTPException, Form
+
 @app.post("/predict")
-async def predict(file: UploadFile = File(...)):
+async def predict(
+    file: UploadFile = File(...),
+    lang: str = Form("en")
+):
     if not file.content_type or not file.content_type.startswith("image/"):
         raise HTTPException(status_code=400, detail="File must be an image (JPEG, PNG, etc.)")
 
@@ -116,7 +121,29 @@ async def predict(file: UploadFile = File(...)):
         severity = "Mild" if confidence > 0.90 else "Moderate" if confidence > 0.70 else "Severe"
         
         # Using the new disease-specific recommendations engine
-        recommendations = get_recommendations(disease_label)
+        recommendations = get_recommendations(disease_label, lang)
+
+        # Base description
+        description_text = (
+            f"AI analysis detected '{disease_name}' on {crop_name} "
+            f"with {confidence * 100:.1f}% confidence."
+        )
+
+        # Translate description if necessary
+        if lang != "en":
+            from deep_translator import GoogleTranslator
+            try:
+                translator = GoogleTranslator(source="en", target=lang)
+                description_text = translator.translate(description_text)
+                
+                # Also translate crop and disease names to show in UI correctly
+                crop_name = translator.translate(crop_name)
+                disease_name = translator.translate(disease_name)
+                
+                # Translate severity
+                severity = translator.translate(severity)
+            except Exception as e:
+                print(f"Error translating description/names: {e}")
 
         return {
             "success": True,
@@ -124,10 +151,7 @@ async def predict(file: UploadFile = File(...)):
             "diseaseName": disease_name,
             "confidence": f"{confidence * 100:.1f}%",
             "severity": severity,
-            "description": (
-                f"AI analysis detected '{disease_name}' on {crop_name} "
-                f"with {confidence * 100:.1f}% confidence."
-            ),
+            "description": description_text,
             "recommendations": recommendations,
         }
 

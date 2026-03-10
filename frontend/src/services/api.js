@@ -90,10 +90,10 @@ export const loginUser = async (credentials) => {
   });
 };
 
-// Real Application Services
-export const predictCropDisease = async (imageFile) => {
+export const predictCropDisease = async (imageFile, lang = "en") => {
   const formData = new FormData();
   formData.append("file", imageFile);
+  formData.append("lang", lang);
 
   try {
     const response = await fetch("http://localhost:8000/predict", {
@@ -140,7 +140,10 @@ export const predictCropDisease = async (imageFile) => {
 };
 
 const OPENAI_API_KEY =
-  "PULL_FROM_ENV_OR_REPLACE_WITH_YOUR_KEY";
+  import.meta.env.VITE_OPENAI_API_KEY || "PULL_FROM_ENV_OR_REPLACE_WITH_YOUR_KEY";
+
+const GEMINI_API_KEY =
+  import.meta.env.VITE_GEMINI_API_KEY || "PULL_FROM_ENV_OR_REPLACE_WITH_YOUR_KEY";
 
 const SYSTEM_PROMPT = `You are CropCare AI, an expert agricultural assistant specializing in crop diseases, plant health, and farming best practices. You help farmers identify diseases, understand symptoms, and get actionable advice on:
 - Crop disease diagnosis and treatment
@@ -151,6 +154,49 @@ const SYSTEM_PROMPT = `You are CropCare AI, an expert agricultural assistant spe
 Keep your answers concise, practical, and farmer-friendly. If a question is unrelated to agriculture, politely redirect the conversation back to farming topics.`;
 
 export const chatWithBot = async (message) => {
+  // Try Gemini First if available
+  if (GEMINI_API_KEY && GEMINI_API_KEY !== "PULL_FROM_ENV_OR_REPLACE_WITH_YOUR_KEY") {
+    try {
+      const response = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            contents: [
+              {
+                role: "user",
+                parts: [{ text: message }],
+              },
+            ],
+            systemInstruction: {
+              parts: [{ text: SYSTEM_PROMPT }],
+            },
+            generationConfig: {
+              maxOutputTokens: 300,
+              temperature: 0.7,
+            },
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        const err = await response.json();
+        throw new Error(err.error?.message || "Gemini API error");
+      }
+
+      const data = await response.json();
+      const reply = data.candidates?.[0]?.content?.parts?.[0]?.text?.trim();
+      return { reply: reply || "Sorry, I couldn't generate a response. Please try again." };
+    } catch (error) {
+      console.error("Gemini Chatbot error:", error);
+      console.log("Falling back to OpenAI...");
+    }
+  }
+
+  // Fallback to OpenAI
   try {
     const response = await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
@@ -178,10 +224,9 @@ export const chatWithBot = async (message) => {
     const reply = data.choices?.[0]?.message?.content?.trim();
     return { reply: reply || "Sorry, I couldn't generate a response. Please try again." };
   } catch (error) {
-    console.error("Chatbot error:", error);
+    console.error("OpenAI Chatbot error:", error);
     return {
-      reply:
-        "Sorry, I'm having trouble connecting right now. Please check your internet connection and try again.",
+      reply: `Connection Error: ${error.message}`,
     };
   }
 };

@@ -15,6 +15,7 @@ import { useTranslation } from "react-i18next";
 import AIResultCard from "../components/AIResultCard";
 import DiseaseInformationPanel from "../components/DiseaseInformationPanel";
 import RecommendationPanel from "../components/RecommendationPanel";
+import NearbyShops from "../components/NearbyShops";
 
 // Supported crops shown as hints in the UI
 const SUPPORTED_CROPS = [
@@ -35,7 +36,7 @@ const SUPPORTED_CROPS = [
 ];
 
 const DiseaseDetection = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [selectedImage, setSelectedImage] = useState(null);
   const [imageFile, setImageFile] = useState(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
@@ -59,7 +60,8 @@ const DiseaseDetection = () => {
     setResult(null);
     setError(null);
     try {
-      const res = await predictCropDisease(imageFile);
+      // Pass the current selected language to the backend
+      const res = await predictCropDisease(imageFile, i18n.language);
 
       // Check if the API returned a validation error
       if (res.validationError) {
@@ -275,6 +277,7 @@ const DiseaseDetection = () => {
                 <DiseaseInformationPanel result={result} />
                 <RecommendationPanel recommendations={result.recommendations} />
               </div>
+              <NearbyShops cropName={result.cropName} />
             </div>
           ) : (
             /* ── Idle / Waiting ──────────────────────────────────────────── */

@@ -5,11 +5,12 @@ import {
   X,
   Send,
   Mic,
-  Loader2,
   Volume2,
   MicOff,
   VolumeX,
 } from "lucide-react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import { chatWithBot } from "../services/api";
 import { AuthContext } from "../context/AuthContext";
 
@@ -71,8 +72,11 @@ const Chatbot = () => {
 
     // Stop any ongoing speech
     window.speechSynthesis.cancel();
+    
+    // Clean markdown before speaking
+    const cleanText = text.replace(/[*_~`#\[\]()]/g, '');
 
-    const utterance = new SpeechSynthesisUtterance(text);
+    const utterance = new SpeechSynthesisUtterance(cleanText);
     utterance.lang = "en-IN";
     utterance.rate = 1.0;
     window.speechSynthesis.speak(utterance);
@@ -119,7 +123,7 @@ const Chatbot = () => {
     <div className="fixed bottom-6 right-6 z-50">
       {/* Chat Window */}
       {isOpen && (
-        <div className="bg-white rounded-2xl shadow-2xl border border-emerald-100 w-80 md:w-96 flex flex-col overflow-hidden animate-in slide-in-from-bottom-5 mb-4">
+        <div className="bg-white rounded-2xl shadow-2xl border border-emerald-100 w-80 md:w-[500px] flex flex-col overflow-hidden animate-in slide-in-from-bottom-5 mb-4 max-h-[85vh]">
           <div className="bg-emerald-600 p-4 text-white flex justify-between items-center">
             <div className="flex items-center gap-3">
               <div className="bg-emerald-500 p-2 rounded-full">
@@ -148,20 +152,35 @@ const Chatbot = () => {
             </div>
           </div>
 
-          <div className="flex-1 p-4 overflow-y-auto space-y-4 max-h-96 min-h-80 bg-gray-50 flex flex-col">
+          <div className="flex-1 p-4 overflow-y-auto space-y-4 max-h-[60vh] min-h-80 bg-gray-50 flex flex-col">
             {messages.map((msg, idx) => (
               <div
                 key={idx}
-                className={`flex max-w-[85%] ${
+                className={`flex max-w-[90%] ${
                   msg.sender === "user" ? "self-end" : "self-start"
                 }`}>
                 <div
-                  className={`p-3 rounded-2xl ${
+                  className={`p-3 rounded-2xl prose prose-sm max-w-none break-words ${
                     msg.sender === "user"
                       ? "bg-emerald-600 text-white rounded-br-none"
                       : "bg-white border border-gray-200 text-gray-800 rounded-bl-none shadow-sm"
                   }`}>
-                  {msg.text}
+                  {msg.sender === "ai" ? (
+                    <ReactMarkdown 
+                      remarkPlugins={[remarkGfm]}
+                      components={{
+                        p: ({node, ...props}) => <p className="m-0 mb-1 last:mb-0" {...props} />,
+                        ul: ({node, ...props}) => <ul className="m-0 pl-4 list-disc" {...props} />,
+                        ol: ({node, ...props}) => <ol className="m-0 pl-4 list-decimal" {...props} />,
+                        li: ({node, ...props}) => <li className="m-0" {...props} />,
+                        strong: ({node, ...props}) => <strong className="font-semibold text-emerald-800" {...props} />,
+                      }}
+                    >
+                      {msg.text}
+                    </ReactMarkdown>
+                  ) : (
+                    msg.text
+                  )}
                 </div>
               </div>
             ))}
